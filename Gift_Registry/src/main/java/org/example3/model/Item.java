@@ -3,25 +3,29 @@ package org.example3.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-@Entity
+@Entity     //Mark the class as an entity
 public class Item {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id   //Sets value as primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)   //Auto increment
     private Long id;
 
+    //Basic attributes
     private String name;
     private double price;
     private int quantity;
-    private boolean purchased;
+    private boolean purchased;   //Whether the item has already been purchased
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "registry_id")
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)   //Many items can belong to one registry
+    @JoinColumn(name = "registry_id")    //Foreign key in the Item table
+    @JsonIgnore     //Prevent infinite recursion during JSON serialization
     private Registry registry;
 
+    //Default constructor
     public Item() {
     }
 
+
+    //Parameterized constructor for creating objects
     public Item(String name, double price, int quantity, boolean purchased, Registry registry) {
         this.name = name;
         this.price = price;
@@ -30,6 +34,8 @@ public class Item {
         this.registry = registry;
     }
 
+
+    //Getters and setters for all fields
     public Long getId() {
         return id;
     }

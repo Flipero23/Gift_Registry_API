@@ -3,24 +3,27 @@ package org.example3.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-@Entity
+@Entity   //Declares the class as an entity
 public class Guest {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id    //Sets value as primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  //Auto increment
     private Long id;
 
+    //Basic attributes
     private String name;
     private String email;
-    private boolean hasRSVP;
+    private boolean hasRSVP;    //Whether the user has RSVP'd
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "registry_id")
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)    //Many guest can belong to one registry
+    @JoinColumn(name = "registry_id")    //Foreign key in the Guest table
+    @JsonIgnore          //Prevent infinite recursion during JSON serialization
     private Registry registry;
 
+    //Default constructor
     public Guest() {
     }
 
+    //Parameterized constructor for creating objects
     public Guest(String name, String email, boolean hasRSVP, Registry registry) {
         this.name = name;
         this.email = email;
@@ -28,6 +31,7 @@ public class Guest {
         this.registry = registry;
     }
 
+    //Getters and setters for all fields
     public Long getId() {
         return id;
     }
