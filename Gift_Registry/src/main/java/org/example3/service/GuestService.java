@@ -20,18 +20,18 @@ public class GuestService {
     @Autowired
     private RegistryRepository registryRepository;
 
-    //Fetch all guests from the H2 database
+    //Method to fetch all guests from the H2 database
     public List<Guest> getAllGuests() {
         return guestRepository.findAll();
     }
 
-    //Fetch a specific guest by ID, or throw an exception if the ID is not found
+    //Method to fetch a specific guest by ID, or throw an exception if the ID is not found
     public Guest getGuestById(Long guestId) {
         return guestRepository.findById(guestId)
                 .orElseThrow(() -> new ResourceNotFoundException("Guest not found with id: " + guestId));
     }
 
-    //Add a new guest to a specific registry
+    //Method to add a new guest to a specific registry, or throw an exception if the registry does not exist
     public Guest addGuestToRegistry(Long registryId, Guest guest){
         Registry registry = registryRepository.findById(registryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Registry not found with id: " + registryId));
@@ -39,14 +39,14 @@ public class GuestService {
         return guestRepository.save(guest);   //Save the guest to the database
     }
 
-    //Fetch all guests associated with a specific registry
+    //Method to fetch all guests associated with a specific registry, or throw an exception if the registry does not exist
     public List<Guest> getGuestsByRegistry(Long registryId){
         Registry registry = registryRepository.findById(registryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Registry not found with id: " + registryId));
         return registry.getGuests();
     }
 
-    //Update an existing guest's infomration
+    //Method to update an existing guest's information, or throw an exception if the guest does not exist
     public Guest updateGuest(Long guestId, Guest updatedGuest){
         //Find the guest by their ID
         Guest guest = guestRepository.findById(guestId)
@@ -57,14 +57,14 @@ public class GuestService {
         return guestRepository.save(guest);   //Save the updated guest information to the database
     }
 
-    //Delete a guest by ID
+    //Method to delete a guest by its ID, or throw an exception if the guest does not exist
     public void deleteGuest(Long guestId){
         Guest guest = guestRepository.findById(guestId)
                 .orElseThrow(() -> new ResourceNotFoundException("Guest not found with id: " + guestId));
         guestRepository.delete(guest);
     }
 
-    //Mark a guest as having RSVP'd
+    //Method to mark a guest as having RSVP'd, or throw an exception if the guest does not exist
     public Guest markGuestRSVP(Long guestId){
         //Find guest by ID
         Guest guest = guestRepository.findById(guestId)
