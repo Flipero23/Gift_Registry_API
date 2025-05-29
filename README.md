@@ -1,4 +1,6 @@
-Registry Endpoints (when running on localmachine):
+Running on localmachine:
+
+Registry Endpoints:
 
 GET http://localhost:8080/registries  //GET all registries
 
